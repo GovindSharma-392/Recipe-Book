@@ -1,0 +1,20 @@
+<%- include('./partials/header') %>
+<title>Login</title>
+<%- include('./partials/nav') %>
+
+<div style="background-color: #ffffff84; width: 500px; height: 400px; margin: auto; margin-top: 100px; padding: 20px; border-radius: 25px; border: 1px solid black; margin-bottom: 50px;" >
+  <form action="/user/login" method="post">
+    <h1 style="margin-left: 40%;">Login</h1>
+    <div class="mb-3">
+        <label for="username" class="form-label"><strong>Username</strong></label>
+        <input type="text" class="form-control" id="username"  name="username" placeholder="Enter Username">
+      </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label"><strong>Password</strong></label>
+      <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Enter Password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<%- include('./partials/footer') %>

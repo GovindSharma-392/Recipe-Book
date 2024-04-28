@@ -1,0 +1,11 @@
+# Ignore system files and directories
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+node_modules/
+.classpath
+.project
+build/
+dist/
+out/

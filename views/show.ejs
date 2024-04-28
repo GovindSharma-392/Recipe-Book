@@ -1,0 +1,113 @@
+<%- include('./partials/header') %>
+<title>Search Recipes</title>
+<%- include('./partials/nav') %>
+
+<div class="container mt-5" style=" margin: 20px; margin-left: 30px ; background-color: #ffffff7d; color: black;">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>Recipe Details</h1>
+            <div style="width: 400px; height: 300px; border: 3px solid black; margin-left: 40%;  "><img style="width: 100%; height: 100%;" src="<%= item.imageUrl %>" class="rounded mx-auto d-block" alt="..."></div>
+            <table style="border: 4px solid black; width: 500px;margin-top: 20px; margin-left: 35%;">
+                <tr style="border: 4px solid black;">
+                  <th style="border: 4px solid black; padding: 20px;font-family: fantasy; font-size: 30px;">NAME</th>
+                  <th style="border: 4px solid black; padding: 20px;font-family: fantasy; font-size: 30px;">  <%= item.dish %></th>
+                </tr>
+
+                <tr style="border: 4px solid black;">
+                    <th style="border: 4px solid black; padding: 20px;font-family: fantasy; font-size: 30px;">Course</th>
+                    <th style="border: 4px solid black; padding: 20px;font-family: fantasy; font-size: 30px;">  <%= item.mealType %></th>
+                  </tr>
+
+                <tr style="border: 4px solid black;">
+                    <th style="border: 4px solid black; padding: 20px;font-family: fantasy; font-size: 30px;">Cuisine</th>
+                    <th style="border: 4px solid black; padding: 20px;font-family: fantasy; font-size: 30px;">  <%= item.cuisine %></th>
+                </tr>
+
+                <tr style="border: 4px solid black;">
+                    <th style="border: 4px solid black; padding: 20px;font-family: fantasy; font-size: 30px;">Diet</th>
+                    <th style="border: 4px solid black; padding: 20px;font-family: fantasy; font-size: 30px;"><%= item.diet %></th>
+                </tr>
+                <tr>
+                    <div class="row-md-4">
+                        <div class="card" style="width: 150px; margin-top: 50px; background-color: rgba(82, 80, 77, 0.685); color: white;">
+                            <div class="card-body" style="display: flex; align-items: center; justify-content: center; color: white;">
+                                <h5 style="font-size: 30px;"><i class="bi bi-person"></i>:</h5><span style="margin-left: 5px; font-size: 30px; color: white;"><%= item.numPeople %></span>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+              </table>            
+            <p style="font-size: 50px;" class="card-text">
+                <strong>Ingredients: </strong><br>
+                <ul style="font-size: 30px; font-weight: bold;">
+                    <% item.ingredients.forEach(ingredient => { %>
+                        <p style="display: list-item; list-style-type: disc;"><%= ingredient %></p>
+                    <% }); %>
+                </ul>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Description section -->
+    <div class="row mt-4">
+        <div class="col-md-12" >
+            <h2><strong>Description</strong></h2>
+            <p style="font-size: 20px; font-weight: normal;"><%= item.description %></p>
+        </div>
+    </div>
+    <div style="margin-bottom: 30px;">
+        <h1><strong>Steps:</strong></h1>
+        <% item.steps.forEach((step, index) => { %>
+            <p style="font-size: 20px; font-weight: bold;"><%= index + 1 %>. <%= step %></p>
+        <% }); %>
+    </div>
+    </div>
+    <div class="col-lg-6" style="background-color: rgba(245, 245, 220, 0.576); margin-left: 30px; width: 100%;">
+        <h1 class="text-center" style=" color: black; font-size: 40px; font-family: sans-serif; font-weight: bold;">Review</h1>
+        <form action="/review/review/<%= item._id %>" method="post">
+          <div class="mb-3">
+            <label for="customRange3" class="form-label">rating</label>
+            <input style="border-radius: 50px; height: 5px;" type="range" class="form-control" min="0" max="5" step="1" id="customRange3" name="rating">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">comment</label>
+            <textarea type="text" class="form-control" id="exampleInputPassword1" name="comment"></textarea>
+          </div>
+          <button style="background-color: burlywood; border: 2px solid black;" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <% for(let review of item.reviews){ %>
+        <div class="container mt-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= review.rating %></h5>
+              <p class="card-text"><%= review.comment %></p>
+              <form action="/dish/review/<%= review._id %>/<%= item._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+              <h5><%= review.user %></h5>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      </div>
+</div>
+<div style="display: flex; flex-direction: row-reverse;border-color: 2px solid black;">
+    <button style="background-color: #c2fbd7; border-radius: 10px; color: green; cursor: pointer; display: inline-block; font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif; padding: 7px 20px; text-align: center; text-decoration: none; transition: all 250ms; border: 0; font-size: 16px; user-select: none; -webkit-user-select: none; touch-action: manipulation;"
+    onmouseover="this.style.backgroundColor='#90ee90'; this.style.transform='scale(1.05) rotate(-1deg)';"
+    onmouseout="this.style.backgroundColor='#c2fbd7'; this.style.transform='scale(1)';">
+    <a href="/dish/updateRecipe/<%= item._id %>"><span class="material-symbols-outlined">edit</span></a>
+</button>
+<button style="background-color: #ff0000; margin: 10px; border-radius: 100px; color: #fff; cursor: pointer; display: inline-block; font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif; padding: 7px 20px; text-align: center; text-decoration: none; transition: all 250ms; border: 0; font-size: 16px; user-select: none; -webkit-user-select: none; touch-action: manipulation;"
+    onmouseover="this.style.backgroundColor='#ff3333';"
+    onmouseout="this.style.backgroundColor='#ff0000';">
+    <a href="/dish/deleteRecipe/<%= item._id %>" style="text-decoration: none; color: inherit;">
+        <span class="material-symbols-outlined">delete</span>
+    </a>
+</button>
+
+</div>
+
+
+
+<%- include('./partials/footer') %>

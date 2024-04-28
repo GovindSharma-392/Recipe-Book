@@ -1,0 +1,78 @@
+<%- include('./partials/header') %>
+<title>Add Recipe</title>
+<%- include('./partials/nav') %>
+
+<div class="container mt-5" style=" margin: 20px; margin-left: 30px ; background-color: #ffffff7d; color: black;">
+    <h1>Add Dish</h1>
+    <form action="/dish/addRecipe" method="post" id="recipeForm">
+        <div class="mb-3">
+            <label for="imageUrl" class="form-label">Image URL</label>
+            <input type="text" class="form-control" id="imageUrl" name="imageUrl" placeholder="Enter Image URL...">
+        </div>
+        <div class="mb-3">
+            <label for="dish" class="form-label">Dish Name</label>
+            <input type="text" class="form-control" id="dish" name="dish" placeholder="Enter Dish Name...">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Diet</label><br>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="vegetarian" name="diet" value="vegetarian">
+                <label for="vegetarian" class="form-check-label">Vegetarian</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="nonvegetarian" name="diet" value="nonvegetarian">
+                <label for="nonvegetarian" class="form-check-label">Non-Vegetarian</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="cuisine" class="form-label">Cuisine</label>
+            <input type="text" class="form-control" id="cuisine" name="cuisine" placeholder="Enter Cuisine...">
+        </div>
+        <div class="mb-3">
+            <label for="mealType" class="form-label">Meal Type</label>
+            <input type="text" class="form-control" id="mealType" name="mealType" placeholder="Ex: Main_Course/Appetizers">
+        </div>
+        <div id="ingredientsContainer">
+            <!-- Ingredients input fields will be added here -->
+        </div>
+        <button type="button" class="btn btn-primary mb-3" id="addIngredientBtn">Add Ingredient</button><br>
+        <div class="mb-3">
+            <label for="numPeople" class="form-label">Number Of People</label>
+            <input type="number" class="form-control" id="numPeople" name="numPeople">
+        </div>
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="8" cols="80" maxlength="1000" required></textarea><br>
+        <small>Maximum 1000 words</small><br>
+        <div id="stepsContainer">
+            <!-- Steps input fields will be added here -->
+        </div>
+        <button type="button" class="btn btn-primary mb-3" id="addStepBtn">Add Step</button><br>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('addIngredientBtn').addEventListener('click', function() {
+        const container = document.getElementById('ingredientsContainer');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'form-control mb-3';
+        input.placeholder = 'Enter Ingredient...';
+        input.name = 'ingredients'; 
+        container.appendChild(input);
+    });
+
+    document.getElementById('addStepBtn').addEventListener('click', function() {
+        const container = document.getElementById('stepsContainer');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'form-control mb-3';
+        input.placeholder = 'Enter Step...';
+        input.name = 'steps'; 
+        container.appendChild(input);
+    });
+</script>
+
+<%- include('./partials/footer') %>

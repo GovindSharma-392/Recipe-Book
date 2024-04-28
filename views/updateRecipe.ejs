@@ -1,0 +1,82 @@
+<%- include('./partials/header') %>
+<title>Update Recipe</title>
+<%- include('./partials/nav') %>
+
+<div class="container mt-5" style=" margin: 20px; margin-left: 30px ; background-color: #ffffff61; color: black;">
+    <h1>Update Dish</h1>
+    <form action="/dish/updateRecipe/<%= item._id %>" method="post" id="recipeForm">
+        <div class="mb-3">
+            <label style="font-size: 20px; font-weight: bold;" for="imageUrl" class="form-label">Image URL</label>
+            <input type="text" class="form-control" id="imageUrl" name="imageUrl" placeholder="Enter Image URL..." value="<%= item.imageUrl %>">
+        </div>
+        <div class="mb-3">
+            <label style="font-size: 20px; font-weight: bold;" for="dish" class="form-label">Dish Name</label>
+            <input type="text" class="form-control" id="dish" name="dish" placeholder="Enter Dish Name..." value="<%= item.dish %>">
+        </div>
+        <div class="mb-3">
+            <label style="font-size: 20px; font-weight: bold;" class="form-label">Diet</label><br>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="vegetarian" name="diet" value="vegetarian" <% if (item.diet === 'vegetarian') { %> checked <% } %>>
+                <label style="font-size: 20px; font-weight: bold;" for="vegetarian" class="form-check-label">Vegetarian</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="nonvegetarian" name="diet" value="nonvegetarian" <% if (item.diet === 'nonvegetarian') { %> checked <% } %>>
+                <label style="font-size: 20px; font-weight: bold;" for="nonvegetarian" class="form-check-label">Non-Vegetarian</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label style="font-size: 20px; font-weight: bold;" for="cuisine" class="form-label">Cuisine</label>
+            <input type="text" class="form-control" id="cuisine" name="cuisine" placeholder="Enter Cuisine..." value="<%= item.cuisine %>">
+        </div>
+        <div class="mb-3">
+            <label style="font-size: 20px; font-weight: bold;" for="mealType" class="form-label">Meal Type</label>
+            <input type="text" class="form-control" id="mealType" name="mealType" placeholder="Ex: Main_Course/Appetizers" value="<%= item.mealType %>">
+        </div>
+        <div id="ingredientsContainer">
+            <% item.ingredients.forEach(ingredient => { %>
+                <input type="text" class="form-control mb-3" placeholder="Enter Ingredient..." name="ingredients" value="<%= ingredient %>">
+            <% }); %>
+        </div>
+        <button type="button" class="btn btn-primary mb-3" id="addIngredientBtn">Add Ingredient</button><br>
+        <div class="mb-3">
+            <label style="font-size: 20px; font-weight: bold;" for="numPeople" class="form-label">Number Of People</label>
+            <input type="number" class="form-control" id="numPeople" name="numPeople" value="<%= item.numPeople %>">
+        </div>
+        <label style="font-size: 20px; font-weight: bold;" for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="8" cols="80" maxlength="1000" required><%= item.description %></textarea><br>
+        <small>Maximum 1000 words</small><br>
+        <div id="stepsContainer">
+            <% item.steps.forEach(step => { %>
+                <input type="text" class="form-control mb-3" placeholder="Enter Step..." name="steps" value="<%= step %>">
+            <% }); %>
+        </div>
+        <button type="button" class="btn btn-primary mb-3" id="addStepBtn">Add Step</button><br>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('addIngredientBtn').addEventListener('click', function() {
+        const container = document.getElementById('ingredientsContainer');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'form-control mb-3';
+        input.placeholder = 'Enter Ingredient...';
+        input.name = 'ingredients'; // Ensure the name is set to 'ingredients'
+        container.appendChild(input);
+    });
+
+    document.getElementById('addStepBtn').addEventListener('click', function() {
+        const container = document.getElementById('stepsContainer');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'form-control mb-3';
+        input.placeholder = 'Enter Step...';
+        input.name = 'steps'; // Ensure the name is set to 'steps'
+        container.appendChild(input);
+    });
+</script>
+
+<%- include('./partials/footer') %>

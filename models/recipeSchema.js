@@ -48,8 +48,8 @@ const recipeSchema = new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:"review"
         }
-    ],
-    uploader: { type: mongoose.Schema.Types.ObjectId, ref: 'user' }
+    ]
+    
 
 });
 

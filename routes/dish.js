@@ -21,7 +21,7 @@ router.get('/show/:id', isLoggedIn, async (req, res) => {
     try {
         const { id } = req.params;
         const recipe = await Recipe.findById(id).populate("reviews");;
-        const username = req.username;
+        // const username = req.username;
         if (!recipe) {
             return res.status(404).send('Recipe not found');
         }
@@ -88,14 +88,15 @@ router.post('/search', isLoggedIn, async(req,res)=>{
 
 router.get('/myrecipes', isLoggedIn, async (req, res) => {
     try {
-      // Find the current user
-      const user = await User.findById(req.user._id);
-  
-      // Fetch only the recipes uploaded by the user
-      const recipes = await Recipe.find({ uploader: user._id });
+      const userId = req.user._id;
+      const UserWithPopulatedData = await User.findById(userId).populate("recipes");
+
+      const recipes = UserWithPopulatedData.recipes;
         
-      // Render the cart view with the fetched recipes
-      res.render('myRecipes', { recipes });
+
+     res.render('myrecipes', {recipes})
+    
+
     } catch (err) {
       console.error(err);
       res.status(500).send('Internal Server Error');
@@ -107,6 +108,7 @@ router.get('/myrecipes', isLoggedIn, async (req, res) => {
 
 router.get('/allrecipe',isLoggedIn, async (req, res) => {
     try {
+        
         const allRecipe = await Recipe.find({});
         res.render('allrecipe', { allRecipe });
     } catch (error) {
@@ -133,7 +135,12 @@ router.get('/foodName/:name', isLoggedIn, async (req, res) => {
 
 router.post('/addRecipe', async (req, res) => {
     try {
-        await Recipe.create(req.body);
+       const recipes = await Recipe.create(req.body);
+       const user = req.user;
+
+       user.recipes.push(recipes);
+       await user.save();
+
         res.redirect('/dish/index');
     } catch (error) {
         console.error('Error adding recipe:', error);

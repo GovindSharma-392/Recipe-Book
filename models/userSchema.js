@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     username:String, 
     password:String,
     email:String,
-    uploadedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
+    recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'recipe' }],
 
     
 });

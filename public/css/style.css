@@ -3,8 +3,8 @@
     color: #fff;
 }
 body{
-    background-color: rgb(30, 30, 29);
-    background-image: url("/images/img6.jpeg");
+    background-color: rgb(253, 253, 253);
+    /* background-image: url("/images/img6.jpeg"); */
     background-size: cover ;
     background-repeat: no-repeat;
     background-position: center;
@@ -16,7 +16,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Fills viewport height for demo */
+    height: 100vh; 
   }
   
   .information-card {

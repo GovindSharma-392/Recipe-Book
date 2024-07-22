@@ -1,22 +1,36 @@
 <%- include('./partials/header') %>
 <title>Login</title>
 <%- include('./partials/nav') %>
-<div style="background-color: #ffffff84; width: 500px; height: 400px; margin: auto; margin-top: 100px; padding: 20px; border-radius: 25px; border: 1px solid black; margin-bottom: 50px;" >
-  <form action="/user/signUp" method="POST">
-    <h1>Register</h1>
-    <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username"  name="username">
-      </div>
-    <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="exampleInputEmail1"  name="email">
+<!-- <div style="background-color: #ffffff84; width: 500px; height: 400px; margin: auto; margin-top: 100px; padding: 20px; border-radius: 25px; border: 1px solid black; margin-bottom: 50px;" >
+  
+</div> -->
+<div style="width: 100%; height: 100%;background: linear-gradient(to right, #ff7e5f, #feb47b, #86a8e7, #91e8e1); border: 2px solid black;">
+  <div style="display: flex; flex-direction: row; margin-left: 120px;">
+    <div style="width: 500px; height: 400px; margin-top: 100px; padding: 20px; border-radius: 25px; border: 1px solid black; margin-bottom: 50px;background-color: #ece9e9;">
+      <h3 style=" font-size: 30px; font-family: sans-serif; margin-left: 40px; margin-top: 30px; font-weight: bold;">Welcome to Recipe Book</h3>
+      <p style="margin-left: 30px;">Discover mouthwatering recipes and culinary inspiration with our ultimate recipe book website – your gateway to delicious adventures!</p>
+      <p style="margin-left: 35%;margin-top: 30px;color: #ff7e5f;">If you are registered</p>
+      <button class="signup-btn"><a href="/user/login" style="text-decoration: none; color: #ece9e9;">Log In</a></button>
     </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+    <div style=" background-color: rgb(180, 183, 183);width: 500px; height: 400px; margin-top: 100px; padding: 20px; border-radius: 25px; border: 1px solid black; margin-bottom: 50px;" >
+      <form action="/user/signUp" method="POST">
+        <h1>Register</h1>
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username"  name="username">
+          </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1"  name="email">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  </div>
+  
 </div>
 <%- include('./partials/footer') -%>

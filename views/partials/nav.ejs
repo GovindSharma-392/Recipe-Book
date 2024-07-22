@@ -3,63 +3,58 @@
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
         <a style="text-decoration: none; color: #fff; font-weight: bold; margin-left: 30px; font-size: 25px; font-family: serif;" href="/dish/index"><strong>Recipe Book</strong></a>
         <ul style="list-style-type: none; padding: 0; margin: 0; display: flex;">
-            
-              <li style="margin-right: 20px; margin-right: 350px;">
+            <li style="margin-right: 20px; margin-right: 350px;">
                 <form action="/dish/search" method="post" class="d-flex" role="search" style="width: 300px;">
-                  <input class="form-control me-2" type="search" name="dishName" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                    <input class="form-control me-2" type="search" name="dishName" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
                 </form>
-              </li>
-              
-            
-            
-            
+            </li>
             <% if(!currUser){ %>
-
                 <li style="margin-right: 20px;"><a href="/user/login" style="text-decoration: none; color: #fff;">Login</a></li>
-                <li style="margin-right: 20px;"><a href="/user/signUp" style="text-decoration: none; color: #fff;">signup</a></li>
-            <% }else{ %>
+                <li style="margin-right: 20px;"><a href="/user/signUp" style="text-decoration: none; color: #fff;">Signup</a></li>
+            <% } else { %>
                 <li class="dropdown" style="position: relative; margin-right: 20px;">
                     <a style="text-decoration: none; color: #fff; cursor: pointer; font-size: 25px; font-family: serif;" onclick="toggleDropbar()"><%= currUser.username %></a>
-                    <ul id="dropdownbyname" class="dropdown-menu" style="position: absolute; top: 100%; left: 0; background-color: #f5f7f9; padding: 20px; display: none; border: 2px solid black;">
-                        <li ><a style="text-decoration: none; color: #1f1e1e;font-weight: bold; " href="/dish/index">Home</a></li>
-                        <li ><a style="text-decoration: none; color: #1f1e1e;font-weight: bold;" href="/dish/mealType/Appetizers">Appetizers</a></li>
-                        <li><a style="text-decoration: none; color: #1f1e1e;font-weight: bold;" href="/dish/mealType/main">Main Course</a></li>
-                        <li><a style="text-decoration: none; color: #1f1e1e;font-weight: bold;" href="/dish/mealType/Desserts">Desserts</a></li>
-                        <li><a style="text-decoration: none; color: #1f1e1e;font-weight: bold;" href="/About">About</a></li>
+                    <ul id="dropdownbyname" class="dropdown-menu">
+                        <li><a href="/dish/index">Home</a></li>
+                        <li><a href="/dish/mealType/Appetizers">Appetizers</a></li>
+                        <li><a href="/dish/mealType/main">Main Course</a></li>
+                        <li><a href="/dish/mealType/Desserts">Desserts</a></li>
+                        <li><a href="/About">About</a></li>
                         <% if(currUser){ %>
-                            <li><a style="text-decoration: none; color: #1f1e1e;font-weight: bold;; margin-right: 10px;" href="/dish/addRecipe">Add Recipe</a></li>
-                            <li><a style="text-decoration: none; color: #1f1e1e;font-weight: bold;; margin-right: 10px;" href="/dish/myRecipes"> My Recipe</a></li>
-                            <% } %>
-                        <!-- Add more options as needed -->
+                            <li><a href="/dish/addRecipe">Add Recipe</a></li>
+                            <li><a href="/dish/myRecipes">My Recipes</a></li>
+                        <% } %>
                     </ul>
                 </li>
-                <!-- <li style="margin-right: 20px;"><a style="text-decoration: none; color: #fff;"></a></li> -->
                 <form action="/user/logout" method="post">
                     <li style="margin-right: 20px;"><button style="background-color: #343a40; color: #fff;">Logout</button></li>
                 </form>
-                <% } %>
+            <% } %>
         </ul>
-        
     </div>
 </nav>
 
-<style>
-    .dropdown-menu li {
-        transition: background-color 0.3s ease;
-    }
-    .dropdown-menu li:hover {
-        background-color: grey;
-    }
-</style>
+
 
 <script>
     function toggleDropbar() {
         var dropdownMenu = document.getElementById("dropdownbyname");
-        dropdownMenu.style.display = (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") ? "block" : "none";
+        if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") {
+            dropdownMenu.style.display = "block";
+            document.addEventListener("click", closeDropdownOnClickOutside);
+        } else {
+            dropdownMenu.style.display = "none";
+            document.removeEventListener("click", closeDropdownOnClickOutside);
+        }
     }
-    function toggleDropdown() {
-        var dropdownMenu = document.getElementById("dropdown-menu");
-        dropdownMenu.style.display = (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") ? "block" : "none";
+
+    function closeDropdownOnClickOutside(event) {
+        var dropdownMenu = document.getElementById("dropdownbyname");
+        var button = event.target.closest(".dropdown > a");
+        if (!dropdownMenu.contains(event.target) && !button) {
+            dropdownMenu.style.display = "none";
+            document.removeEventListener("click", closeDropdownOnClickOutside);
+        }
     }
 </script>

@@ -2,18 +2,20 @@ const express = require('express');
 const path = require('path');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
-const dish = require('../routes/dish.js');
-const reviewRoutes = require('../routes/reviewRoutes.js')
+const dish = require('./routes/dish.js');
+const reviewRoutes = require('./routes/reviewRoutes.js')
 const methodOverride = require('method-override');
-const userRouter = require('../routes/user.js')
-const User = require('../models/userSchema.js');
+const userRouter = require('./routes/user.js')
+const User = require('./models/userSchema.js');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const flash = require('connect-flash');
 const session = require("express-session");
+const dotenv = require('dotenv');
 
 const app = express();
 
+require('dotenv').config()
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 
@@ -49,7 +51,7 @@ app.use((req, res, next)=>{
   next();
 })
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/config").then(() => 
+mongoose.connect(process.env.MONGODB_URI).then(() => 
     console.log('MongoDB Connected')
 )
   .catch(err => console.log(err));
@@ -63,4 +65,3 @@ app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
 
-module.exports = app;

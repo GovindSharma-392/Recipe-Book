@@ -86,7 +86,7 @@ router.get('/mealType/:mealType', isLoggedIn, async(req, res)=>{
     try {
          // Retrieve cuisine from query parameters
         const RecipeType = await Recipe.find({ mealType: mealType});
-        res.render('mealType', { RecipeType: RecipeType });
+        res.render('mealtype', { RecipeType: RecipeType });
     } catch (error) {
         console.error('Error fetching recipes:', error);
         res.status(500).send('Internal Server Error');

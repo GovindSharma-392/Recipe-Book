@@ -10,7 +10,7 @@ router.get('/login', (req, res) => {
 
 // Signup route
 router.get('/signup', (req, res) => {
-    res.render('signup');
+    res.render('signUp');
 });
 
 // Signup post route

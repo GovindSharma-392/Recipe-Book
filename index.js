@@ -17,7 +17,7 @@ const app = express();
 
 require('dotenv').config()
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(session({
   secret: 'keyboard cat',
@@ -56,6 +56,9 @@ mongoose.connect(process.env.MONGODB_URI).then(() =>
 )
   .catch(err => console.log(err));
 
+  app.get('/',(req, res)=>{
+    res.redirect('/dish/index')
+  } )
 app.use('/dish', dish);
 app.use('/review',reviewRoutes);
 app.use('/user', userRouter)

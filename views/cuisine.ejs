@@ -3,7 +3,14 @@
 <%- include('./partials/nav') -%>
 
 <div class="container mt-5" style="background-color: rgba(240, 248, 255, 0.716);">
-    
+    <form method="GET" action="/dish/cuisine/<%= type %>">
+        <label for="diet">Filter by Diet:</label>
+        <select id="diet" name="diet" onchange="this.form.submit()">
+            <option value="">All</option>
+            <option value="vegetarian" <%= diet === 'vegetarian' ? 'selected' : '' %>>Vegetarian</option>
+            <option value="nonvegetarian" <%= diet === 'nonvegetarian' ? 'selected' : '' %>>nonvegetarian</option>
+        </select>
+    </form>
 
 
         <% for(let item of cuisineRecipes) { %>

@@ -10,7 +10,11 @@ console.log(typeof(isLoggedIn));
 router.get('/index', async (req, res) => {
     try {
         const allRecipe = await Recipe.find({});
-        res.render('index', { allRecipe });
+        const cuisineTypes = new Set(allRecipe.map(recipe => recipe.cuisine));
+        const uniqueCuisines = await Array.from(cuisineTypes);
+
+        // console.log(uniqueCuisines);
+        res.render('index', { allRecipe, uniqueCuisines });
     } catch (error) {
         console.error('Error fetching recipes:', error);
         res.status(500).send('Internal Server Error');
@@ -41,12 +45,32 @@ router.get('/addRecipe', isLoggedIn, async (req, res) => {
     }
 });
 
+// router.get('/cuisine/:type', isLoggedIn, async (req, res) => {
+//     const {type} = req.params;
+//     try {
+//          // Retrieve cuisine from query parameters
+//         const cuisineRecipes = await Recipe.find({ cuisine: type});
+//         res.render('cuisine', { cuisineRecipes: cuisineRecipes });
+//     } catch (error) {
+//         console.error('Error fetching recipes:', error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
 router.get('/cuisine/:type', isLoggedIn, async (req, res) => {
-    const {type} = req.params;
+    const { type } = req.params;
+    const diet = req.query.diet || '';  // Get the diet filter from query parameters
+    let query = { cuisine: type };     // Query to filter by cuisine type
+
+    if (diet) {
+        query.diet = diet;             // Add diet filter if provided
+    }
+
     try {
-         // Retrieve cuisine from query parameters
-        const cuisineRecipes = await Recipe.find({ cuisine: type});
-        res.render('cuisine', { cuisineRecipes: cuisineRecipes });
+        // Fetch recipes based on the filter from your database
+        const cuisineRecipes = await Recipe.find(query);
+        
+        // Render the page with filtered recipes
+        res.render('cuisine', { cuisineRecipes, type, diet });
     } catch (error) {
         console.error('Error fetching recipes:', error);
         res.status(500).send('Internal Server Error');
@@ -75,6 +99,7 @@ router.get('/mealType/:mealType', isLoggedIn, async(req, res)=>{
 
 router.post('/search', isLoggedIn, async(req,res)=>{
     const { dishName } = req.body;
+    
     
     try{
         const dish = await Recipe.find({ dish: { $regex: dishName, $options: 'i' } });

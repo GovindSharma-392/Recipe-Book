@@ -120,7 +120,7 @@ router.get('/myrecipes', isLoggedIn, async (req, res) => {
       const recipes = UserWithPopulatedData.recipes;
         
 
-     res.render('myrecipes', {recipes})
+     res.render('myRecipes', {recipes})
     
 
     } catch (err) {

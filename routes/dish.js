@@ -82,6 +82,7 @@ router.get('/mealType/:mealType', isLoggedIn, async(req, res)=>{
     if( mealType === "main"){
         mealType = "Main Course";
     }
+    console.log(mealType);
     try {
          // Retrieve cuisine from query parameters
         const RecipeType = await Recipe.find({ mealType: mealType});
